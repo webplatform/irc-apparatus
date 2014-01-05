@@ -1,0 +1,57 @@
+{
+  "name": "irc-apparatus",
+  "version": "0.0.0",
+  "description": "An IRC bot framework. Plugins are easy to write and can extend core functionality, provide middleware or just listen for events.",
+  "keywords": [
+    "irc",
+    "bot",
+    "nickserv"
+  ],
+  "author": "David Kirstein <frozenice@frozenice.de>",
+  "contributors": [],
+  "license": "MIT",
+  "homepage": "https://github.com/webplatform/irc-apparatus",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webplatform/irc-apparatus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/webplatform/irc-apparatus/issues"
+  },
+  "main": "index.js",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md",
+    "index.js",
+    "lib",
+    "bin"
+  ],
+  "scripts": {
+    "prepublish": "grunt build",
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-mocha-test": "~0.8.1",
+    "grunt-text-replace": "~0.3.10",
+    "mocha-multi": "~0.3.0",
+    "mocha-slow-reporter": "0.0.0",
+    "mocha-lcov-reporter": "0.0.1",
+    "chai": "~1.8.1",
+    "blanket": "~1.1.6",
+    "coveralls": "~2.6.1",
+    "rimraf": "~2.2.5"
+  },
+  "peerDependencies": {},
+  "dependencies": {
+    "debug": "~0.7.4",
+    "q": "~1.0.0",
+    "xregexp": "~2.0.0",
+    "irc": "~0.3.6",
+    "underscore.string": "~2.3.3",
+    "nconf": "~0.6.9",
+    "lodash-node": "~2.4.1"
+  }
+}
