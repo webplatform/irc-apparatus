@@ -1,6 +1,6 @@
 {
   "name": "irc-apparatus",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "An IRC bot framework. Plugins are easy to write and can extend core functionality, provide middleware or just listen for events.",
   "keywords": [
     "irc",
