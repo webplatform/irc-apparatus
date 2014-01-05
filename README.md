@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/webplatform/irc-apparatus/badge.png)](https://coveralls.io/r/webplatform/irc-apparatus)
 [![Dependency Status](https://david-dm.org/webplatform/irc-apparatus.png)](https://david-dm.org/webplatform/irc-apparatus)
 
-***This module is under development!***
+***This module is under development.***
 
 # irc-apparatus
 
