@@ -48,20 +48,8 @@ describe('The Bot config', function() {
     });
 
     it('should be initialized with the default config', function() {
-      bot.conf('bot').should.deep.equal({
-        plugins: []
-      });
-      bot.conf('irc').should.deep.equal({
-        server: null,
-        port: 6667,
-        secure: false,
-        password: null,
-        nick: null,
-        userName: null,
-        realName: null,
-        channels: [],
-        retryCount: 10
-      });
+      bot.config('bot').should.deep.equal(defaultConfig.bot);
+      bot.config('irc').should.deep.equal(defaultConfig.irc);
     });
   });
 
@@ -74,10 +62,20 @@ describe('The Bot config', function() {
 
     it('should be initialized with the custom config', function() {
       var expected = _.merge(_.cloneDeep(defaultConfig), customConfig);
-      bot.conf('bot').should.deep.equal(expected.bot);
-      bot.conf('irc').should.deep.equal(expected.irc);
+      bot.config('bot').should.deep.equal(expected.bot);
+      bot.config('irc').should.deep.equal(expected.irc);
     });
 
-    // TODO: change values, reload
+    it('should be reloadable with another config', function() {
+      var customConfig2 = _.cloneDeep(customConfig);
+      customConfig2.bot.plugins[0] = 'my-plugin';
+      delete customConfig2.irc.userName;
+      delete customConfig2.irc.secure;
+      customConfig2.irc.channels = ['&anotherChannel'];
+      bot.loadConfig(customConfig2);
+      var expected = _.merge(_.cloneDeep(defaultConfig), customConfig2);
+      bot.config('bot').should.deep.equal(expected.bot);
+      bot.config('irc').should.deep.equal(expected.irc);
+    });
   });
 });
