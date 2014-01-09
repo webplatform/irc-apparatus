@@ -90,9 +90,10 @@ module.exports = function(grunt) {
 
     if (process.env.TRAVIS) {
       if (COVERALLS) {
-        process.env.multi = 'spec=- mocha-lcov-reporter=test-results/lcov.txt';
+        process.env.multi = 'mocha-unfunk-reporter=- mocha-lcov-reporter=test-results/lcov.txt';
         grunt.task.run(['build', 'mochaTest', 'replace:results', 'coveralls']);
       } else {
+        process.env.multi = 'mocha-unfunk-reporter=- mocha-slow-reporter=test-results/slow.txt html-cov=test-results/coverage.html mocha-lcov-reporter=test-results/lcov.txt';
         grunt.config.set('mochaTest.lib.options.reporter', 'spec');
         grunt.task.run(['build', 'mochaTest']);
       }

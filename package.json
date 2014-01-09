@@ -42,7 +42,8 @@
     "chai": "~1.8.1",
     "blanket": "~1.1.6",
     "coveralls": "~2.6.1",
-    "rimraf": "~2.2.5"
+    "rimraf": "~2.2.5",
+    "mocha-unfunk-reporter": "~0.4.0"
   },
   "peerDependencies": {},
   "dependencies": {
