@@ -93,8 +93,7 @@ module.exports = function(grunt) {
         process.env.multi = 'mocha-unfunk-reporter=- mocha-lcov-reporter=test-results/lcov.txt';
         grunt.task.run(['build', 'mochaTest', 'replace:results', 'coveralls']);
       } else {
-        process.env.multi = 'mocha-unfunk-reporter=- mocha-slow-reporter=test-results/slow.txt html-cov=test-results/coverage.html mocha-lcov-reporter=test-results/lcov.txt';
-        grunt.config.set('mochaTest.lib.options.reporter', 'spec');
+        grunt.config.set('mochaTest.lib.options.reporter', 'mocha-unfunk-reporter');
         grunt.task.run(['build', 'mochaTest']);
       }
     } else {
