@@ -1,39 +1,13 @@
+var os = require('os');
+var fs = require('fs');
+var path = require('path');
 var _ = require('lodash-node');
 var app = require('../../index.js');
 
-var defaultConfig = {
-  bot: {
-    plugins: []
-  },
-
-  irc: {
-    server: null,
-    port: 6667,
-    secure: false,
-    password: null,
-    nick: null,
-    userName: null,
-    realName: null,
-    channels: [],
-    retryCount: 10
-  }
-};
-
-var customConfig = {
-  bot: {
-    plugins: ['plugin1', 'plugin2']
-  },
-  irc: {
-    server: 'irc.freenode.net',
-    port: 6697,
-    secure: true,
-    nick: 'testnick',
-    userName: 'testusername',
-    realName: 'testrealname',
-    channels: ['#channel1', '#channel2'],
-    retryCount: 5
-  }
-};
+var defaultConfig = require('../_fixtures/defaultConfig.js');
+var customConfig = require('../_fixtures/customConfig.js');
+var customConfig2 = require('../_fixtures/customConfig2.js');
+var customConfig3 = require('../_fixtures/customConfig3.js');
 
 describe('The Bot config', function() {
   describe('with default settings', function() {
@@ -67,15 +41,64 @@ describe('The Bot config', function() {
     });
 
     it('should be reloadable with another config', function() {
-      var customConfig2 = _.cloneDeep(customConfig);
-      customConfig2.bot.plugins[0] = 'my-plugin';
-      delete customConfig2.irc.userName;
-      delete customConfig2.irc.secure;
-      customConfig2.irc.channels = ['&anotherChannel'];
       bot.loadConfig(customConfig2);
       var expected = _.merge(_.cloneDeep(defaultConfig), customConfig2);
       bot.config('bot').should.deep.equal(expected.bot);
       bot.config('irc').should.deep.equal(expected.irc);
+    });
+  });
+
+  describe('with custom settings via file', function() {
+    var srcFile = path.resolve(__dirname, '../_fixtures/customConfig.js');
+    var srcFile2 = path.resolve(__dirname, '../_fixtures/customConfig2.js');
+    var srcFile3 = path.resolve(__dirname, '../_fixtures/customConfig3.js');
+    var tmpDir = os.tmpDir();
+    var tmpFile = path.resolve(tmpDir, 'irc-apparatus-temp-config.js');
+    var tmpFile2 = path.resolve(tmpDir, 'irc-apparatus-temp-config2.js');
+    var bot;
+
+    before(function(done) {
+      bot = app.Bot();
+      // copy our fixtures
+      fs.createReadStream(srcFile).pipe(fs.createWriteStream(tmpFile)).on('finish', function() {
+        fs.createReadStream(srcFile2).pipe(fs.createWriteStream(tmpFile2)).on('finish', function() {
+          done();
+        });
+      });
+    });
+
+    after(function() {
+      // clean up
+      fs.unlinkSync(tmpFile);
+      fs.unlinkSync(tmpFile2);
+    });
+
+    it('should be initialized with the custom config via an absolute path', function() {
+      bot.loadConfig(tmpFile);
+      var expected = _.merge(_.cloneDeep(defaultConfig), customConfig);
+      bot.config('bot').should.deep.equal(expected.bot);
+      bot.config('irc').should.deep.equal(expected.irc);
+    });
+
+    it('should be reloadable with another file via a relative path', function() {
+      var cwd = process.cwd();
+      process.chdir(tmpDir);
+      bot.loadConfig(tmpFile2);
+      process.chdir(cwd);
+
+      var expected = _.merge(_.cloneDeep(defaultConfig), customConfig2);
+      bot.config('bot').should.deep.equal(expected.bot);
+      bot.config('irc').should.deep.equal(expected.irc);
+    });
+
+    it('should re-read a modified file, which was already loaded before', function(done) {
+      fs.createReadStream(srcFile3).pipe(fs.createWriteStream(tmpFile)).on('finish', function() {
+        bot.loadConfig(tmpFile);
+        var expected = _.merge(_.cloneDeep(defaultConfig), customConfig3);
+        bot.config('bot').should.deep.equal(expected.bot);
+        bot.config('irc').should.deep.equal(expected.irc);
+        done();
+      });
     });
   });
 });
