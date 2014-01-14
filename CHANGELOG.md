@@ -1,5 +1,8 @@
 # Changelog
 
+#### 0.1.1
+  - Change some build stuff, mostly coverage (now using istanbul instead of blanket)
+
 #### 0.1.0
   - Add config system
     - This supports environment variables, process arguments, default values and custom values
