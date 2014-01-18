@@ -102,40 +102,29 @@ describe('The Bot config', function() {
     });
   });
 
-  describe('should ensure arrays', function() {
+  describe('should ensure arrays for', function() {
     var bot;
 
     before(function() {
       bot = app.Bot();
     });
 
-    function loadPlugins(plugins) {
+    it('bot:plugins', function() {
       bot.loadConfig({
         bot: {
-          plugins: plugins
+          plugins: 'a,b;c'
         }
       });
-    }
-
-    it('when using an array', function() {
-      var plugins = ['plugin1', 'plugin2'];
-      loadPlugins(plugins);
-      bot.config('bot:plugins').should.equal(plugins);
+      bot.config('bot:plugins').should.deep.equal(['a', 'b', 'c']);
     });
 
-    it('when using a string', function() {
-      loadPlugins('plugin1,plugin2;plugin3');
-      bot.config('bot:plugins').should.deep.equal(['plugin1', 'plugin2', 'plugin3']);
-    });
-
-    it('when using null', function() {
-      loadPlugins(null);
-      bot.config('bot:plugins').should.be.empty;
-    });
-
-    it('when using anything else', function() {
-      loadPlugins(23);
-      bot.config('bot:plugins').should.be.empty;
+    it('irc:channels', function() {
+      bot.loadConfig({
+        irc: {
+          channels: 'a,b;c'
+        }
+      });
+      bot.config('irc:channels').should.deep.equal(['a', 'b', 'c']);
     });
   });
 });
