@@ -101,4 +101,41 @@ describe('The Bot config', function() {
       });
     });
   });
+
+  describe('should ensure arrays', function() {
+    var bot;
+
+    before(function() {
+      bot = app.Bot();
+    });
+
+    function loadPlugins(plugins) {
+      bot.loadConfig({
+        bot: {
+          plugins: plugins
+        }
+      });
+    }
+
+    it('when using an array', function() {
+      var plugins = ['plugin1', 'plugin2'];
+      loadPlugins(plugins);
+      bot.config('bot:plugins').should.equal(plugins);
+    });
+
+    it('when using a string', function() {
+      loadPlugins('plugin1,plugin2;plugin3');
+      bot.config('bot:plugins').should.deep.equal(['plugin1', 'plugin2', 'plugin3']);
+    });
+
+    it('when using null', function() {
+      loadPlugins(null);
+      bot.config('bot:plugins').should.be.empty;
+    });
+
+    it('when using anything else', function() {
+      loadPlugins(23);
+      bot.config('bot:plugins').should.be.empty;
+    });
+  });
 });
