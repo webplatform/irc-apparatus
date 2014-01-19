@@ -1,5 +1,14 @@
 # Changelog
 
+#### 0.2.0
+  - Add some utilities for control-codes and colors
+  - Add basic connect/disconnect functionality (`start()`/`stop()`)
+  - Add listeners
+    - Manage them via `addListener`/`removeListener`
+    - For available types see `lib/listener-types.js`
+    - Callbacks get a normalized context object (source, target, text, channel, ...)
+    - Callbacks can easily reply via the `context.reply*()` methods
+
 #### 0.1.1
   - Change some build stuff, mostly coverage (now using istanbul instead of blanket)
 
