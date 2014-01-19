@@ -12,6 +12,8 @@ module.exports = {
     userName: null,
     realName: null,
     channels: [],
+    floodProtection: true,
+    floodProtectionDelay: 500,
     retryCount: 10
   }
 };

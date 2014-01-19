@@ -1,3 +1,3 @@
 // irc-apparatus
-exports.Bot = require('./lib/bot.js');
-exports.Utils = require('./lib/utils.js');
+exports.Bot = require('./lib/bot');
+exports.Utils = require('./lib/utils');

@@ -1,4 +1,4 @@
-var app = require('../../index.js');
+var app = require('../../');
 
 describe('The Bot module', function() {
   it('should be exposed', function() {

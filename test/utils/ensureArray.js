@@ -1,4 +1,4 @@
-var Utils = require('../../index.js').Utils;
+var Utils = require('../../').Utils;
 
 describe('Utils.ensureArray', function() {
   describe('should work', function() {
@@ -16,7 +16,7 @@ describe('Utils.ensureArray', function() {
       Utils.ensureArray(null).should.be.empty;
     });
 
-    it('when using simple objects', function() {
+    it('when using simple types', function() {
       Utils.ensureArray(23).should.deep.equal([23]);
       Utils.ensureArray(0.5).should.deep.equal([0.5]);
       Utils.ensureArray(true).should.deep.equal([true]);

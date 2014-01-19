@@ -2,7 +2,7 @@ var os = require('os');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash-node');
-var app = require('../../index.js');
+var app = require('../../');
 
 var defaultConfig = require('../_fixtures/defaultConfig.js');
 var customConfig = require('../_fixtures/customConfig.js');
